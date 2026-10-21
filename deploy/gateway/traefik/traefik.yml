@@ -24,12 +24,12 @@ entryPoints:
     address: ":80"
     forwardedHeaders:
       trustedIPs:
-        # Local loopback & private subnets (for local Docker Compose testing)
+        # Local & Private Networks (Docker / K3s internal pod & host routing)
         - "127.0.0.1/32"
         - "10.0.0.0/8"
         - "172.16.0.0/12"
         - "192.168.0.0/16"
-        # Cloudflare IPv4 ranges (https://www.cloudflare.com/ips-v4/)
+        # Cloudflare IPv4 CIDR Blocks (https://www.cloudflare.com/ips-v4/)
         - "173.245.48.0/20"
         - "103.21.244.0/22"
         - "103.22.200.0/22"
@@ -57,12 +57,12 @@ entryPoints:
     address: ":443"
     forwardedHeaders:
       trustedIPs:
-        # Local loopback & private subnets (for local Docker Compose testing)
+        # Local & Private Networks (Docker / K3s internal pod & host routing)
         - "127.0.0.1/32"
         - "10.0.0.0/8"
         - "172.16.0.0/12"
         - "192.168.0.0/16"
-        # Cloudflare IPv4 ranges (https://www.cloudflare.com/ips-v4/)
+        # Cloudflare IPv4 CIDR Blocks (https://www.cloudflare.com/ips-v4/)
         - "173.245.48.0/20"
         - "103.21.244.0/22"
         - "103.22.200.0/22"
