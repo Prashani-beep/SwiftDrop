@@ -8,6 +8,11 @@
 
 SwiftDrop organizes business capabilities into bounded contexts inside the Core API modular monolith, supported by specialized deployable services for read-heavy or asynchronous workloads.
 
+<p align="center">
+  <img src="../intial/swiftdrop.png" alt="SwiftDrop Architecture Topology" width="100%" />
+</p>
+<p align="center"><em>Figure 1: High-Level System Architecture, Component Topology & Service Boundaries.</em></p>
+
 ```mermaid
 graph TD
     subgraph Edge
