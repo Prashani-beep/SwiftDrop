@@ -6,7 +6,7 @@
 
 ## 1. Bounded Contexts Overview
 
-SwiftDrop organizes business capabilities into bounded contexts inside the Core API modular monolith, supported by specialized deployable services for read-heavy or asynchronous workloads.
+SwiftDrop organizes business capabilities into bounded contexts inside the Core API modular monolith, supported by specialized deployable services for read-heavy or asynchronous workloads. Ingress routing, edge proxying, and cluster hosting topology are governed by [ADR-001: Traefik Ingress Controller](adr-001-traefik-ingress.md) and [ADR-002: Kubernetes & Hosting Architecture](adr-002-kubernetes-hosting.md).
 
 <div align="center">
 
@@ -18,11 +18,13 @@ SwiftDrop organizes business capabilities into bounded contexts inside the Core 
 
 ```mermaid
 graph TD
-    subgraph Edge
+    subgraph Edge ["Edge Tier"]
+        CF["Cloudflare DNS & Edge Proxy"]
         GW["Traefik API Gateway / Ingress Controller"]
+        CF --> GW
     end
 
-    subgraph "Core API (Go Modular Monolith)"
+    subgraph CoreAPI ["Core API (Go Modular Monolith)"]
         IAM["Identity & Access Context (Member 1)"]
         PRC["Pricing Context (Member 2)"]
         PAR["Parcel Management Context (Member 2)"]

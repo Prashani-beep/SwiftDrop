@@ -58,7 +58,9 @@ flowchart TD
     ClientEdge["External Clients\n(Customer, Courier, Dispatcher, Merchant)"]
     
     subgraph EdgeTier ["Edge & Ingress Tier"]
+        CF["Cloudflare DNS & Edge Proxy\n(DDoS Protection · WAF · Edge SSL)"]
         GW["API Gateway / Ingress Controller (Traefik)\n(TLS Termination · Rate Limiting · Route Dispatch)"]
+        CF --> GW
     end
 
     subgraph CoreTier ["Core Application Tier"]
@@ -88,7 +90,7 @@ flowchart TD
         RD[("Redis 7 (Optional)\nSSE Live Fan-Out Cache")]
     end
 
-    ClientEdge --> GW
+    ClientEdge --> CF
     GW --> ModularMonolith
     GW --> TRK
     GW --> AIA
@@ -228,8 +230,14 @@ swiftdrop/
 │       └── features/
 │           ├── customer-merchant/           # Customer portal & tracking UI (Member 6)
 │           └── dispatcher-admin/            # Dispatch board & admin backoffice (Member 7)
+├── deploy/
+│   ├── docker-compose.yml                   # Local developer full stack orchestration
+│   └── gateway/                             # Traefik configuration, middlewares & living docs
 ├── docs/
-│   ├── architecture/domain-boundaries.md    # Bounded contexts, invariants & ownership table
+│   ├── architecture/
+│   │   ├── domain-boundaries.md             # Bounded contexts, invariants & ownership table
+│   │   ├── adr-001-traefik-ingress.md       # ADR: Traefik edge ingress controller
+│   │   └── adr-002-kubernetes-hosting.md    # ADR: Kubernetes & Hosting Architecture
 │   ├── contracts/api-conventions.md         # REST standards, error envelopes & idempotency
 │   ├── contracts/event-contracts.md         # Event schemas, Transactional Outbox & RabbitMQ
 │   └── intial/                              # Authoritative SRS, Standards & Work Division docs

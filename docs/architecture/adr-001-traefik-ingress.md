@@ -57,7 +57,11 @@ Treating Traefik as an Ingress Controller rather than an all-in-one API manageme
 - [x] Update project specifications (`SwiftDrop_SRS_v1.md`, `.docx`, `.pdf`) to reference Traefik.
 - [x] Update team work division (`SwiftDrop_Team_Work_Division_v1.0.md`, `.docx`, `.pdf`) for Member 7 and Member 9.
 - [x] Update root living documentation (`README.md`, `AGENTS.md`, `docs/architecture/domain-boundaries.md`, `web/README.md`).
+- [x] Configure `forwardedHeaders.trustedIPs` with Cloudflare CIDR ranges in static Traefik configuration (`deploy/gateway/traefik/traefik.yml`).
+- [x] Author ADR-002 detailing Kubernetes hosting, K3s installation, and Cloudflare integration ([ADR-002](adr-002-kubernetes-hosting.md)).
 - [ ] Implement declarative Traefik Docker Compose service (`deploy/docker-compose.yml`) for local developer environments.
 - [ ] Implement Traefik Kubernetes manifests (`IngressRoute`, `Middleware` CRDs) in `deploy/gateway/traefik/`.
+- [ ] Validate rate limiting operates accurately on real client IPs rather than Cloudflare edge IPs.
 - [ ] Verify Server-Sent Events (SSE) streaming through Traefik under simulated connection drops and reconnects.
+- [ ] Verify SSE streaming survives Cloudflare proxy (heartbeat keepalives, `X-Accel-Buffering: no`).
 - [ ] Verify `401 Unauthorized` and `403 Forbidden` responses pass transparently without gateway header tampering.
