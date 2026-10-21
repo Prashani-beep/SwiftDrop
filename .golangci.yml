@@ -1,0 +1,48 @@
+run:
+  timeout: 5m
+  tests: true
+
+linters:
+  enable:
+    - govet
+    - errcheck
+    - staticcheck
+    - revive
+    - gosec
+    - depguard
+    - misspell
+    - ineffassign
+
+linters-settings:
+  depguard:
+    rules:
+      domain_purity:
+        files:
+          - "**/internal/**/domain/**.go"
+        deny:
+          - pkg: "net/http"
+            desc: "Domain layer must not import transport or HTTP packages."
+          - pkg: "database/sql"
+            desc: "Domain layer must not import raw SQL packages. Use repository interfaces."
+          - pkg: "github.com/rabbitmq/amqp091-go"
+            desc: "Domain layer must not import messaging infrastructure."
+          - pkg: "**/internal/**/infrastructure/**"
+            desc: "Domain layer must not import infrastructure implementations."
+          - pkg: "**/internal/**/transport/**"
+            desc: "Domain layer must not import transport implementations."
+
+      application_purity:
+        files:
+          - "**/internal/**/application/**.go"
+        deny:
+          - pkg: "net/http"
+            desc: "Application use cases must remain decoupled from HTTP handlers."
+          - pkg: "**/internal/**/transport/**"
+            desc: "Application layer must not import transport DTOs."
+
+issues:
+  exclude-rules:
+    - path: _test\.go
+      linters:
+        - gosec
+        - errcheck

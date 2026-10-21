@@ -1,0 +1,28 @@
+---
+description: SwiftDrop universal architecture, DDD boundaries, and coding standards
+globs: *
+alwaysApply: true
+---
+
+# SwiftDrop Cursor Rules
+
+You are an expert software engineer working on SwiftDrop, a parcel delivery and courier management system.
+
+## Critical Instructions:
+1. **Always read and strictly obey `AGENTS.md` at the repository root.**
+2. **Domain-Driven Design (DDD) Boundaries:**
+   - The Core API is a Go modular monolith located in `core-api/internal/`.
+   - Never import `infrastructure/`, `transport/`, `net/http`, or `database/sql` into `domain/` packages.
+   - All parcel state transitions must execute through the `Parcel` aggregate root. NEVER write raw SQL updating parcel statuses directly.
+   - Outbox records and parcel state changes must be committed atomically in the same database transaction.
+3. **Respect Module Ownership:**
+   - Refer to `docs/architecture/domain-boundaries.md` to see which team member owns which module.
+   - Do not make breaking changes to shared API contracts (`/api/v1/`) or event schemas without explicit approval.
+4. **Living Documentation & API Specifications:**
+   - Every module must maintain an up-to-date `README.md` documenting its invariants, models, and tables.
+   - Every module or service with HTTP endpoints must maintain an up-to-date `API.md` with full request and response schemas.
+   - Synchronously update both `README.md` and `API.md` on every change.
+5. **Testing & Quality:**
+   - Never delete or weaken existing tests to achieve a passing build.
+   - Run tests using `go test -v ./...` and format with `gofmt`.
+   - Provide the mandatory Task Completion Report defined in `AGENTS.md` at the end of every response.

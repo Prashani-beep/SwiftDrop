@@ -1,0 +1,9 @@
+# SwiftDrop Cursor Rules (Fallback)
+Always inspect and strictly adhere to `AGENTS.md` at the repository root.
+- Follow Go modular monolith architecture in `core-api/internal/`.
+- Protect DDD boundaries: domain layer has zero infrastructure or HTTP dependencies.
+- Enforce parcel state changes through the `Parcel` aggregate root; never execute raw SQL updates on parcel status.
+- Atomically commit domain state changes, status history, and outbox events in a single PostgreSQL transaction.
+- Respect the 10-member capability ownership in `docs/architecture/domain-boundaries.md`.
+- Maintain living documentation: synchronously update co-located `README.md` and `API.md` for every modified module or service.
+- Provide the mandatory Task Completion Report from `AGENTS.md` upon completing work.
