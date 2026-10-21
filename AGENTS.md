@@ -149,7 +149,7 @@ Every team member has designated domain ownership. Agents must never modify anot
 To prevent architectural drift and documentation rot across 10 developers and multiple AI agents, **every module and service must maintain co-located living documentation**. 
 
 ### 6.1 Module Living Documentation (`README.md`)
-Every internal module in `core-api/internal/<module>/` and every independent service (`services/<service>/`, `web/<app>/`) MUST maintain an authoritative `README.md` that is **updated synchronously with every code change**. It must contain complete, up-to-date information:
+Every internal module in `core-api/internal/<module>/`, independent services (`services/<service>/`), and the frontend web application (`web/`) MUST maintain an authoritative `README.md` that is **updated synchronously with every code change**. It must contain complete, up-to-date information:
 1. **Module Purpose & Owner:** Primary domain capability and assigned owner (Members 1–10).
 2. **Business Invariants & Rules:** Strict domain invariants, state machines, and validation rules enforced by this module.
 3. **Domain Models & Structure:** Entities, value objects, domain errors, and aggregate root definitions.

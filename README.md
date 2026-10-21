@@ -45,10 +45,13 @@ SwiftDrop balances the operational simplicity of a **Go Modular Monolith** with 
 
 ### 1.1 Architecture Blueprint
 
-<p align="center">
-  <img src="docs/intial/swiftdrop.png" alt="SwiftDrop Architecture Blueprint" width="100%" />
-</p>
-<p align="center"><em>Figure 1.1: SwiftDrop Full System Architecture, Component Topology & Service Boundaries.</em></p>
+<div align="center">
+
+![SwiftDrop Architecture Blueprint](docs/intial/swiftdrop.png)
+
+*Figure 1.1: SwiftDrop Full System Architecture, Component Topology & Service Boundaries.*
+
+</div>
 
 ```mermaid
 flowchart TD
@@ -122,8 +125,8 @@ Every team member has formal domain ownership. Each capability owner maintains l
 | **03** | **Dispatch, Couriers & Proof of Delivery** | Courier profiles, vehicle capacity, dispatch board use cases, delivery attempts, photographic proof-of-delivery, signatures. | `core-api/internal/dispatch/`<br>`core-api/internal/delivery/` | [Dispatch README](core-api/internal/dispatch/README.md) · [API.md](core-api/internal/dispatch/API.md)<br>[Delivery README](core-api/internal/delivery/README.md) · [API.md](core-api/internal/delivery/API.md) |
 | **04** | **Merchant Integration** | B2B merchant onboarding, API key issuance, webhook configuration, SSRF target destination validation. | `core-api/internal/merchants/` | [README](core-api/internal/merchants/README.md) · [API.md](core-api/internal/merchants/API.md) |
 | **05** | **Tracking API & Real-Time Updates** | Read-optimized tracking projection service, Server-Sent Events (SSE) streaming, public milestone query masking. | `services/tracking/` | [README](services/tracking/README.md) · [API.md](services/tracking/API.md) |
-| **06** | **Customer & Merchant Frontend** | React/TypeScript web app: customer booking wizard, parcel tracking, address book, merchant order creation dashboard. | `web/customer-portal/` | Frontend Client Application |
-| **07** | **Dispatcher/Admin UI & API Gateway** | Dispatcher operations portal, courier mobile web view, admin backoffice screens, reverse proxy gateway route map. | `web/dispatcher-dashboard/`<br>`core-api/internal/admin/` | [Admin README](core-api/internal/admin/README.md) · [API.md](core-api/internal/admin/API.md) |
+| **06** | **Customer & Merchant Frontend** | React/TypeScript single SPA: customer booking wizard, parcel tracking, address book, merchant order creation dashboard. | `web/src/features/customer-merchant/` | [Frontend README](web/README.md) |
+| **07** | **Dispatcher/Admin UI & API Gateway** | Dispatcher operations portal, courier mobile web view, admin backoffice screens, reverse proxy gateway route map. | `web/src/features/dispatcher-admin/`<br>`core-api/internal/admin/` | [Frontend README](web/README.md)<br>[Admin README](core-api/internal/admin/README.md) · [API.md](core-api/internal/admin/API.md) |
 | **08** | **Event-Driven Backend & Integrations** | Transactional outbox relay, RabbitMQ broker setup, consumer event worker, webhook dispatcher, retry/DLQ handling. | `core-api/internal/events/`<br>`services/messaging/` | [Events README](core-api/internal/events/README.md)<br>[Messaging README](services/messaging/README.md) |
 | **09** | **DevOps, Kubernetes & Observability** | Containerization, Docker Compose, Kubernetes manifests, Helm charts, CI/CD quality pipelines, Prometheus/Grafana metrics. | `deploy/`, `.github/` | Deployment & Cluster Manifests |
 | **10** | **AI Assistant/MCP & Cross-Workflow QA** | Python/FastAPI assistant service, read-only MCP tool execution, prompt sandboxing, end-to-end integration test coordination. | `services/ai-assistant/` | [README](services/ai-assistant/README.md) · [API.md](services/ai-assistant/API.md) |
@@ -217,9 +220,14 @@ swiftdrop/
 │   ├── tracking/                            # Read-optimized SSE projection service (Member 5)
 │   ├── messaging/                           # Outbox Relay & Event Worker daemons (Member 8)
 │   └── ai-assistant/                        # Python/FastAPI assistant & MCP server (Member 10)
-├── web/
-│   ├── customer-portal/                     # React/TS Customer & Merchant web application (Member 6)
-│   └── dispatcher-dashboard/                # React/TS Dispatcher & Courier web interface (Member 7)
+├── web/                                     # Unified React 18+ / TS / Tailwind SPA
+│   ├── README.md                            # Frontend living doc & RBAC routing guide
+│   └── src/
+│       ├── app/                             # Router shell, auth context & global layouts
+│       ├── shared/                          # Reusable UI library, HTTP client & types
+│       └── features/
+│           ├── customer-merchant/           # Customer portal & tracking UI (Member 6)
+│           └── dispatcher-admin/            # Dispatch board & admin backoffice (Member 7)
 ├── docs/
 │   ├── architecture/domain-boundaries.md    # Bounded contexts, invariants & ownership table
 │   ├── contracts/api-conventions.md         # REST standards, error envelopes & idempotency
