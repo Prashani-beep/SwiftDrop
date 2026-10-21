@@ -14,7 +14,7 @@
 SwiftDrop adopts a **Unified Single-Page Application (Option B)** architecture rather than splitting the client into multiple separate repositories or deployments.
 
 ### Why Unified SPA?
-1. **Single Deployment & Port:** Built once into static assets and served via NGINX or containerized reverse proxy on a single port (e.g. `3000`). No complex multi-port routing or cross-origin overhead.
+1. **Single Deployment & Port:** Built once into static assets and served via Traefik Ingress or containerized reverse proxy on a single port (e.g. `3000`). No complex multi-port routing or cross-origin overhead.
 2. **Unified Authentication & RBAC Shell:** Single login screen (`/auth/login`). Upon JWT authentication, the user is redirected dynamically based on their role (`ROLE_CUSTOMER`, `ROLE_MERCHANT` &rarr; `/portal/*` vs `ROLE_DISPATCHER`, `ROLE_ADMIN`, `ROLE_COURIER` &rarr; `/ops/*`).
 3. **Shared Design System:** A unified component system (buttons, modals, form inputs, status chips, notification toasts) ensures consistent brand visual standards across all portals.
 4. **Feature-Sliced Isolation:** Code is isolated into dedicated feature folders (`customer-merchant` vs `dispatcher-admin`). Member 6 and Member 7 work in decoupled directories without merge conflicts.

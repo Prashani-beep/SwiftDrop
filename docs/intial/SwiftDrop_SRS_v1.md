@@ -667,7 +667,7 @@ The assignment requires measurable coverage and test results. BASELINE target: a
 | Retry policy | Bounded exponential backoff with jitter; concrete attempt count and delays configurable | Backend/operations |
 | Retention periods | Set retention for audit, delivery proof, webhook attempts, and personal data | Product/security |
 | Performance targets | Approve Section 9.1 proposed targets after first benchmark | Team/QA |
-| Gateway implementation | Kong Gateway/Ingress integration or another single documented implementation; avoid duplicate proxies without purpose | DevOps |
+| Gateway implementation | Traefik Ingress Controller / API Gateway integration (single unified proxy hop for L7 ingress, route mapping, rate limiting, and CORS; avoids duplicate proxies without purpose) | DevOps |
 | Database/broker hosting | Compose locally; decide in-cluster vs managed for bonus/target environment | DevOps |
 
 ### 13.3 Coding conventions

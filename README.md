@@ -58,7 +58,7 @@ flowchart TD
     ClientEdge["External Clients\n(Customer, Courier, Dispatcher, Merchant)"]
     
     subgraph EdgeTier ["Edge & Ingress Tier"]
-        GW["API Gateway / Reverse Proxy\n(TLS Termination · Rate Limiting · Route Dispatch)"]
+        GW["API Gateway / Ingress Controller (Traefik)\n(TLS Termination · Rate Limiting · Route Dispatch)"]
     end
 
     subgraph CoreTier ["Core Application Tier"]
@@ -126,7 +126,7 @@ Every team member has formal domain ownership. Each capability owner maintains l
 | **04** | **Merchant Integration** | B2B merchant onboarding, API key issuance, webhook configuration, SSRF target destination validation. | `core-api/internal/merchants/` | [README](core-api/internal/merchants/README.md) · [API.md](core-api/internal/merchants/API.md) |
 | **05** | **Tracking API & Real-Time Updates** | Read-optimized tracking projection service, Server-Sent Events (SSE) streaming, public milestone query masking. | `services/tracking/` | [README](services/tracking/README.md) · [API.md](services/tracking/API.md) |
 | **06** | **Customer & Merchant Frontend** | React/TypeScript single SPA: customer booking wizard, parcel tracking, address book, merchant order creation dashboard. | `web/src/features/customer-merchant/` | [Frontend README](web/README.md) |
-| **07** | **Dispatcher/Admin UI & API Gateway** | Dispatcher operations portal, courier mobile web view, admin backoffice screens, reverse proxy gateway route map. | `web/src/features/dispatcher-admin/`<br>`core-api/internal/admin/` | [Frontend README](web/README.md)<br>[Admin README](core-api/internal/admin/README.md) · [API.md](core-api/internal/admin/API.md) |
+| **07** | **Dispatcher/Admin UI & API Gateway** | Dispatcher operations portal, courier mobile web view, admin backoffice screens, Traefik gateway routing & policy maps. | `web/src/features/dispatcher-admin/`<br>`core-api/internal/admin/` | [Frontend README](web/README.md)<br>[Admin README](core-api/internal/admin/README.md) · [API.md](core-api/internal/admin/API.md) |
 | **08** | **Event-Driven Backend & Integrations** | Transactional outbox relay, RabbitMQ broker setup, consumer event worker, webhook dispatcher, retry/DLQ handling. | `core-api/internal/events/`<br>`services/messaging/` | [Events README](core-api/internal/events/README.md)<br>[Messaging README](services/messaging/README.md) |
 | **09** | **DevOps, Kubernetes & Observability** | Containerization, Docker Compose, Kubernetes manifests, Helm charts, CI/CD quality pipelines, Prometheus/Grafana metrics. | `deploy/`, `.github/` | Deployment & Cluster Manifests |
 | **10** | **AI Assistant/MCP & Cross-Workflow QA** | Python/FastAPI assistant service, read-only MCP tool execution, prompt sandboxing, end-to-end integration test coordination. | `services/ai-assistant/` | [README](services/ai-assistant/README.md) · [API.md](services/ai-assistant/API.md) |

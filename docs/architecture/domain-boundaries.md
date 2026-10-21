@@ -19,7 +19,7 @@ SwiftDrop organizes business capabilities into bounded contexts inside the Core 
 ```mermaid
 graph TD
     subgraph Edge
-        GW["API Gateway / Ingress"]
+        GW["Traefik API Gateway / Ingress Controller"]
     end
 
     subgraph "Core API (Go Modular Monolith)"
@@ -71,7 +71,7 @@ Each of the 10 team members owns a distinct business capability. Cross-module ch
 | **Member 4** | Merchant Integration | `core-api/internal/merchants/` | Merchant profiles, application/approval state handling, API key generation, webhook configuration endpoints. |
 | **Member 5** | Tracking API & Real-Time Updates | `services/tracking/` | Standalone read-optimized tracking service, Server-Sent Events (SSE) stream, public milestone queries, Redis cache integration. |
 | **Member 6** | Customer & Merchant Frontend | `web/src/features/customer-merchant/` | React/TypeScript single-page app: booking wizard, active shipment tracker, address management, merchant order submission UI. |
-| **Member 7** | Dispatcher/Admin Frontend & API Gateway | `web/src/features/dispatcher-admin/`<br>`core-api/internal/admin/`<br>`deploy/gateway/` | Dispatcher management portal, admin dashboard, courier mobile web view, admin-facing Core API endpoints (zone setup, system metrics, reports), and API Gateway routing. |
+| **Member 7** | Dispatcher/Admin Frontend & API Gateway | `web/src/features/dispatcher-admin/`<br>`core-api/internal/admin/`<br>`deploy/gateway/` | Dispatcher management portal, admin dashboard, courier mobile web view, admin-facing Core API endpoints (zone setup, system metrics, reports), and Traefik API Gateway routing & middleware policies. |
 | **Member 8** | Event-Driven Backend & Integrations | `core-api/internal/events/`<br>`services/messaging/` | Core API outbox writer contract, shared event envelope, Outbox Relay poller, RabbitMQ broker setup, Event Worker, push notifications, merchant webhook dispatcher, retry/DLQ, reconciliation CronJob. |
 | **Member 9** | DevOps, Kubernetes & Observability | `deploy/`, `.github/` | Docker Compose, Kubernetes manifests, Helm charts, ingress gateway, CI/CD pipelines, Prometheus/Grafana metrics, probe definitions. |
 | **Member 10** | AI Assistant/MCP & Cross-Workflow Quality | `services/ai-assistant/` | Python/FastAPI assistant service, LLM tool definitions (tracking lookup, fee estimate), prompt safety, rate limiting, and cross-workflow end-to-end test coordination. |

@@ -73,7 +73,7 @@ SwiftDrop uses a **Domain-Driven Design (DDD) inspired Go Modular Monolith** for
 
 ```
 System Topology:
-API Gateway (Reverse Proxy / Edge Security / Rate Limiting)
+API Gateway / Ingress Controller (Traefik: Edge Routing, TLS, Rate Limiting, CORS)
 ├── Core API (Go Modular Monolith: Identity, Parcels, Dispatch, Pricing, Merchants, Delivery)
 ├── Tracking API (Separately deployable, read-optimized SSE projection service)
 ├── Outbox Relay (Dedicated daemon publishing committed events to RabbitMQ)
@@ -137,7 +137,7 @@ Every team member has designated domain ownership. Agents must never modify anot
 | **Member 4** | Merchant Integration | Merchant tenant management, onboarding, API keys, webhook configurations |
 | **Member 5** | Tracking API & Real-Time Updates | Tracking API, read-optimized SSE streams, public tracking lookup |
 | **Member 6** | Customer & Merchant Frontend | Customer & merchant portal (React/TypeScript), shipment tracking, booking UI |
-| **Member 7** | Dispatcher/Admin Frontend & API Gateway | Dispatcher board, courier mobile web, admin dashboard, API Gateway routing |
+| **Member 7** | Dispatcher/Admin Frontend & API Gateway | Dispatcher board, courier mobile web, admin dashboard, Traefik API Gateway routing |
 | **Member 8** | Event-Driven Backend & Integrations | Outbox relay publisher, RabbitMQ broker, consumer worker, webhooks, DLQ |
 | **Member 9** | DevOps, Kubernetes & Observability | Docker Compose, Kubernetes manifests, CI/CD pipelines, observability |
 | **Member 10** | AI Assistant/MCP & Cross-Workflow Quality | Python assistant, approved tool definitions, fee estimation, tracking lookup, test coordination |

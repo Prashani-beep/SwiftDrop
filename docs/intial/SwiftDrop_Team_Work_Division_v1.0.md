@@ -294,7 +294,7 @@ Deliver the customer and merchant-facing web journeys against published backend 
 
 Deliver operational/admin screens and configure a clear external API entry point.
 
-**Primary technologies:** React; TypeScript; Tailwind CSS; Kong or another team-approved gateway; Docker/Kubernetes routing.
+**Primary technologies:** React; TypeScript; Tailwind CSS; Traefik Ingress Controller / API Gateway; Docker/Kubernetes routing.
 
 #### Responsibilities
 
