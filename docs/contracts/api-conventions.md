@@ -35,8 +35,9 @@
       "height_cm": 15.0
     },
     "fee": {
-      "currency": "USD",
-      "amount": "14.50"
+      "currency": "LKR",
+      "amount_cents": 145000,
+      "formatted": "LKR 1,450.00"
     },
     "created_at": "2026-10-21T08:30:00Z",
     "updated_at": "2026-10-21T11:15:00Z"

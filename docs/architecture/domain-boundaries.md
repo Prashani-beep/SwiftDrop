@@ -6,7 +6,14 @@
 
 ## 1. Bounded Contexts Overview
 
-SwiftDrop organizes business capabilities into bounded contexts inside the Core API modular monolith, supported by specialized deployable services for read-heavy or asynchronous workloads. Ingress routing, edge proxying, and cluster hosting topology are governed by [ADR-001: Traefik Ingress Controller](adr-001-traefik-ingress.md) and [ADR-002: Kubernetes & Hosting Architecture](adr-002-kubernetes-hosting.md).
+SwiftDrop organizes business capabilities into bounded contexts inside the Core API modular monolith, supported by specialized deployable services for read-heavy or asynchronous workloads. System architecture decisions and technical specifications are formally governed by:
+- **Ingress & Edge Proxy:** [ADR-001: Traefik Ingress Controller](adr-001-traefik-ingress.md)
+- **Cluster Hosting:** [ADR-002: Kubernetes & Hosting Architecture](adr-002-kubernetes-hosting.md)
+- **Authentication & Security:** [ADR-003: Authentication & Session Strategy](adr-003-authentication-strategy.md)
+- **Parcel Lifecycle & Delivery Invariants:** [ADR-004: Failed Delivery & Reattempt Semantics](adr-004-failed-delivery-semantics.md)
+- **Architecture Decisions Index:** [ADR Index](adr-index.md)
+- **Authoritative Persistence:** [Database Schema & ER Design](database-schema.md)
+- **Execution Flows:** [Key Architecture Sequence Diagrams](sequence-diagrams.md)
 
 <div align="center">
 
