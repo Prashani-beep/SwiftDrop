@@ -25,7 +25,28 @@ cd core-api && golangci-lint run ./...
 
 # Format Go code
 cd core-api && gofmt -w .
+
+# Run Frontend Dev Server
+cd web && npm run dev
+
+# Run Frontend Linter & Type Check
+cd web && npm run lint
+
+# Run Frontend Unit & Component Tests (Vitest)
+cd web && npm run test:unit
+
+# Run Frontend End-to-End Tests (Playwright)
+cd web && npm run test:e2e
 ```
+
+## Frontend & Testing Invariants
+- Consult `.cursor/rules/frontend.mdc` or `web/CLAUDE.md` before making any frontend changes.
+- Never calculate pricing or fee totals client-side; always fetch authoritatively via `POST /api/v1/pricing/quote`.
+- Never evaluate parcel state transitions in the browser; the backend `Parcel` aggregate root is the single source of truth.
+- Dual-token auth: access tokens remain strictly in-memory (`AuthContext`); refresh tokens remain in `HttpOnly` cookies. Never store tokens in `localStorage`.
+- Public tracking (`/track/:trackingNumber`) must strictly redact recipient phone, full street address, and proof attachments.
+- Unit testing: Vitest + React Testing Library for components, custom hooks, and formatters (`npm run test:unit`).
+- E2E testing: Playwright (`@playwright/test`) for critical user journeys (booking, tracking, dispatch, courier POD, failed attempts) using Page Object Models and `data-testid` selectors (`npm run test:e2e`).
 
 ## Mandatory Workflow
 1. Read `AGENTS.md` and the relevant domain documentation.
@@ -34,3 +55,4 @@ cd core-api && gofmt -w .
 4. Run tests and verify invariants.
 5. Synchronously update the module's living `README.md` and `API.md` (if endpoints exist).
 6. Provide the structured completion report required by `AGENTS.md`.
+
