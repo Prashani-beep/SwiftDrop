@@ -58,7 +58,9 @@ flowchart TD
     ClientEdge["External Clients\n(Customer, Courier, Dispatcher, Merchant)"]
     
     subgraph EdgeTier ["Edge & Ingress Tier"]
+        CF["Cloudflare DNS & Edge Proxy\n(DDoS Protection · WAF · Edge SSL)"]
         GW["API Gateway / Ingress Controller (Traefik)\n(TLS Termination · Rate Limiting · Route Dispatch)"]
+        CF --> GW
     end
 
     subgraph CoreTier ["Core Application Tier"]
@@ -88,7 +90,7 @@ flowchart TD
         RD[("Redis 7 (Optional)\nSSE Live Fan-Out Cache")]
     end
 
-    ClientEdge --> GW
+    ClientEdge --> CF
     GW --> ModularMonolith
     GW --> TRK
     GW --> AIA
@@ -228,8 +230,14 @@ swiftdrop/
 │       └── features/
 │           ├── customer-merchant/           # Customer portal & tracking UI (Member 6)
 │           └── dispatcher-admin/            # Dispatch board & admin backoffice (Member 7)
+├── deploy/
+│   ├── docker-compose.yml                   # Local developer full stack orchestration
+│   └── gateway/                             # Traefik configuration, middlewares & living docs
 ├── docs/
-│   ├── architecture/domain-boundaries.md    # Bounded contexts, invariants & ownership table
+│   ├── architecture/
+│   │   ├── domain-boundaries.md             # Bounded contexts, invariants & ownership table
+│   │   ├── adr-001-traefik-ingress.md       # ADR: Traefik edge ingress controller
+│   │   └── adr-002-kubernetes-hosting.md    # ADR: Kubernetes & Hosting Architecture
 │   ├── contracts/api-conventions.md         # REST standards, error envelopes & idempotency
 │   ├── contracts/event-contracts.md         # Event schemas, Transactional Outbox & RabbitMQ
 │   └── intial/                              # Authoritative SRS, Standards & Work Division docs
@@ -348,13 +356,38 @@ All HTTP endpoints adhere to the formal specification in [`docs/contracts/api-co
 
 ## 10. Reference Documentation & Baseline Specifications
 
-Authoritative requirements and architectural decision logs are version-controlled in the repository:
+### 10.1 Core Baselines & Governance
 - **Requirements Specification:** [`docs/intial/SwiftDrop_SRS_v1.md`](docs/intial/SwiftDrop_SRS_v1.md) (`SWD-SRS-001`)
 - **Engineering Standards:** [`docs/intial/SwiftDrop_Engineering_Standards_and_Best_Practices_v1.0.md`](docs/intial/SwiftDrop_Engineering_Standards_and_Best_Practices_v1.0.md)
 - **Work Division Agreement:** [`docs/intial/SwiftDrop_Team_Work_Division_v1.0.md`](docs/intial/SwiftDrop_Team_Work_Division_v1.0.md)
-- **Domain Boundaries & Invariants:** [`docs/architecture/domain-boundaries.md`](docs/architecture/domain-boundaries.md)
-- **REST API Specifications:** [`docs/contracts/api-conventions.md`](docs/contracts/api-conventions.md)
-- **Event Contracts & Outbox:** [`docs/contracts/event-contracts.md`](docs/contracts/event-contracts.md)
+- **AI Agent Rulebook:** [`AGENTS.md`](AGENTS.md)
+
+### 10.2 Architecture & Technical Decisions
+- **Domain Boundaries & Capability Ownership:** [`docs/architecture/domain-boundaries.md`](docs/architecture/domain-boundaries.md)
+- **Architecture Decision Record (ADR) Index:** [`docs/architecture/adr-index.md`](docs/architecture/adr-index.md)
+  - [ADR-001: Traefik Ingress Gateway](docs/architecture/adr-001-traefik-ingress.md)
+  - [ADR-002: Kubernetes & Hosting Architecture](docs/architecture/adr-002-kubernetes-hosting.md)
+  - [ADR-003: Authentication & Session Strategy](docs/architecture/adr-003-authentication-strategy.md)
+  - [ADR-004: Failed Delivery & Reattempt Semantics](docs/architecture/adr-004-failed-delivery-semantics.md)
+- **Database Schema & ER Design:** [`docs/architecture/database-schema.md`](docs/architecture/database-schema.md)
+- **Key Architecture Sequence Diagrams:** [`docs/architecture/sequence-diagrams.md`](docs/architecture/sequence-diagrams.md)
+
+### 10.3 API, Event & Domain Contracts
+- **REST API Conventions:** [`docs/contracts/api-conventions.md`](docs/contracts/api-conventions.md)
+- **Event Contracts & Outbox Specification:** [`docs/contracts/event-contracts.md`](docs/contracts/event-contracts.md)
+- **Pricing Engine & Tariff Rules (LKR):** [`docs/contracts/pricing-rules.md`](docs/contracts/pricing-rules.md)
+- **Webhook Security & SSRF Prevention:** [`docs/contracts/webhook-security.md`](docs/contracts/webhook-security.md)
+
+### 10.4 Operations & Security
+- **Security Notes & Threat Model (SEC-001 to SEC-017):** [`docs/security/security-notes.md`](docs/security/security-notes.md)
+- **Environment Variables Reference:** [`docs/operations/environment-variables.md`](docs/operations/environment-variables.md)
+- **Operational Runbook & Incident Playbooks:** [`docs/operations/runbook.md`](docs/operations/runbook.md)
+- **Local Development Setup Guide:** [`docs/operations/local-development.md`](docs/operations/local-development.md)
+- **Production Deployment Guide (Docker & K3s):** [`docs/operations/deployment-guide.md`](docs/operations/deployment-guide.md)
+
+### 10.5 Quality & Project Management
+- **Master Test Strategy & Traceability Matrix (AT-001 to AT-016):** [`docs/testing/test-strategy.md`](docs/testing/test-strategy.md)
+- **Team Contribution Record Sheet:** [`docs/project/contribution-record.md`](docs/project/contribution-record.md)
 
 ---
 

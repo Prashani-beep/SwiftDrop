@@ -271,13 +271,19 @@ This is the team's proposed engineering baseline, not a claim that every item is
 ## 10. Kubernetes, containers, and configuration
 
 - Each service must have a reproducible container build, documented port, startup command, configuration list, and health endpoints.
-- Use Docker Compose for local development and a documented Kubernetes deployment for the bonus. Keep the difference between local and cluster configuration explicit.
+- Use Docker Compose for local development and a documented Kubernetes deployment for the bonus (K3s baseline; see [ADR-002](docs/architecture/adr-002-kubernetes-hosting.md)). Keep the difference between local and cluster configuration explicit.
 - Use ConfigMaps for non-sensitive configuration and Secrets or an approved secret manager for credentials. Commit only placeholder examples.
 - Define readiness/liveness probes, graceful shutdown, resource requests/limits, and restart behavior for workloads where applicable.
-- Expose services internally by default; use Ingress/API Gateway for intentional external access. Avoid exposing databases, RabbitMQ management interfaces, or internal workers publicly.
+- Workload primitives must match state and lifecycle semantics:
+  - Use **`Deployment`** for stateless workloads (Core API, Tracking API, AI Assistant, Web frontend, Outbox Relay daemon, and Event Worker).
+  - Use **`StatefulSet`** with `volumeClaimTemplates` for persistent stateful infrastructure (PostgreSQL 16 and RabbitMQ 3.13). Never use plain Deployments for databases or message queues without persistent storage lifecycle guarantees.
+  - Use **`CronJob`** for scheduled reconciliation and audit tasks (e.g., outbox dead-letter recovery, expired delivery reapers) rather than long-running background sleep loops.
+- Expose services internally by default (`ClusterIP`); use Traefik Ingress Controller for intentional external access (see [ADR-001](docs/architecture/adr-001-traefik-ingress.md)). Avoid exposing databases, RabbitMQ management interfaces, or internal workers publicly.
+- When fronted by Cloudflare edge proxy, enforce origin-access firewalling (restricting host ports 80 and 443 strictly to Cloudflare CIDR blocks) and configure `forwardedHeaders.trustedIPs` on Traefik entrypoints to guarantee real client IP restoration and preserve rate limiting.
+- Ensure Server-Sent Events (SSE) streams emit `X-Accel-Buffering: no` and send periodic keepalive heartbeats to prevent edge proxy timeouts.
 - Use Services for stable in-cluster discovery and namespaces/labels consistently.
-- Use HPA for appropriate stateless APIs; use queue-depth-based scaling such as KEDA for workers only when metrics and scaling behavior are configured and tested.
-- Do not put persistent database/broker state on ephemeral container filesystems. Use suitable persistent storage or document an approved managed-service choice.
+- Use HPA for appropriate stateless APIs; use queue-depth-based scaling such as KEDA for workers only when metrics and scaling behavior are configured and tested. For single-VPS deployments, static replicas with conservative resource requests are preferred to protect node capacity.
+- Do not put persistent database/broker state on ephemeral container filesystems. For K3s single-node deployments, use the built-in `local-path` StorageClass for PersistentVolumeClaims, paired with automated off-node database backup dumps.
 - Pin image tags for repeatable demos; avoid relying on `latest` for the final submission.
 - Provide a clean-clone setup test and a documented teardown/reset procedure.
 
