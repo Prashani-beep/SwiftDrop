@@ -48,6 +48,12 @@ cd web && npm run test:e2e
 - Unit testing: Vitest + React Testing Library for components, custom hooks, and formatters (`npm run test:unit`).
 - E2E testing: Playwright (`@playwright/test`) for critical user journeys (booking, tracking, dispatch, courier POD, failed attempts) using Page Object Models and `data-testid` selectors (`npm run test:e2e`).
 
+## Kubernetes Scalability Rules
+- **Stateless Scalable Services:** Core API, Tracking API, and Web Frontend scale via HPA. Core API per-pod DB pool must obey: $\text{Replicas}_{\text{max}} \times \text{MaxOpenConns} \le \text{PostgreSQL MaxConnections}$. Tracking API uses Redis Pub/Sub for SSE fan-out.
+- **Event Worker Scaling:** Scales via KEDA on RabbitMQ queue backlog (`queueLength > 10`). All consumers MUST be strictly idempotent.
+- **Outbox Relay Prohibition:** The Outbox Relay is strictly a singleton (`replicas: 1`). Never scale horizontally without leader election.
+- **Stateful Infrastructure:** PostgreSQL and RabbitMQ run as StatefulSets with PVCs; never scale write primaries horizontally via Deployments.
+
 ## Mandatory Workflow
 1. Read `AGENTS.md` and the relevant domain documentation.
 2. Formulate and state an implementation plan.
@@ -55,4 +61,5 @@ cd web && npm run test:e2e
 4. Run tests and verify invariants.
 5. Synchronously update the module's living `README.md` and `API.md` (if endpoints exist).
 6. Provide the structured completion report required by `AGENTS.md`.
+
 
