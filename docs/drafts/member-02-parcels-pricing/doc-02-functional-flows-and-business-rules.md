@@ -163,9 +163,9 @@ A customer or approved merchant needs to see the estimated delivery fee before c
 
 ## UML Sequence Diagram
 
-![Diagram from the original document](Document2-Functional-Flows-Business-Rules-Revised_assets/image-1.png)
+![UML Sequence Diagram — Delivery Fee Estimate](./Document2-Functional-Flows-Business-Rules-Revised_assets/Delivery%20Fee%20Estimate%20Sequence%20Diagram.png)
 
-UML sequence diagram for delivery-fee estimation
+*Figure 4.1: UML Sequence Diagram — Delivery Fee Estimation*
 
 # 5. Functional Flow B — Create a Customer Parcel Booking
 
@@ -232,9 +232,9 @@ A client cannot set the acting actor ID, authoritative price, or arbitrary initi
 
 ## UML Sequence Diagram
 
-![Diagram from the original document](Document2-Functional-Flows-Business-Rules-Revised_assets/image-2.png)
+![UML Sequence Diagram — Customer Parcel Booking](./Document2-Functional-Flows-Business-Rules-Revised_assets/Customer%20Parcel%20Booking%20Sequence%20Diagram.png)
 
-UML sequence diagram for customer parcel booking
+*Figure 5.1: UML Sequence Diagram — Customer Parcel Booking*
 
 # 6. Functional Flow C — Merchant Order Creation
 
@@ -426,9 +426,9 @@ The system assumes at-least-once event delivery; it must not claim exactly-once 
 
 # 10. UML Activity Diagram — Booking Decision Flow
 
-![Diagram from the original document](Document2-Functional-Flows-Business-Rules-Revised_assets/image-3.png)
+![UML Activity Diagram — Parcel Booking Decision Flow](./Document2-Functional-Flows-Business-Rules-Revised_assets/SwiftDrop_Parcel_Booking_Activity_Diagram.png)
 
-UML activity diagram for the parcel booking decision flow
+*Figure 10.1: UML Activity Diagram — Parcel Booking Decision Flow*
 
 # 11. Edge Cases and Expected Outcomes
 
